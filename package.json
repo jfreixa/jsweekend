@@ -1,0 +1,19 @@
+{
+  "name": "jsweekend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfreixa/jsweekend.git"
+  },
+  "author": "Jordi Freixa Serrabassa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jfreixa/jsweekend/issues"
+  },
+  "homepage": "https://github.com/jfreixa/jsweekend#readme"
+}
