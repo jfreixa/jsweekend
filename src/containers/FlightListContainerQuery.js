@@ -40,7 +40,7 @@ const query = gql`
             airport {
               locationId
               city {
-                namea
+                name
               }
             }
           }
