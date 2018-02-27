@@ -19,24 +19,15 @@ const Centered = styled.div`
   margin-bottom: 12px;
 `;
 
-const FlightList = ({ allFlights, loading, onLoadMore }) => {
-  let loadMore = null;
-  let flights = [];
-  if (!loading) {
-    flights = allFlights.edges.map(edge => {
-      return edge.node;
-    });
-
-    loadMore = allFlights.pageInfo.hasNextPage ? (
-      <Centered>
-        <Button onClick={onLoadMore}>loading more</Button>
-      </Centered>
-    ) : null;
-  }
+const FlightList = ({ flights, onLoadMore, hasNextPage }) => {
+  const loadMore = hasNextPage ? (
+    <Centered>
+      <Button onClick={onLoadMore}>loading more</Button>
+    </Centered>
+  ) : null;
 
   return (
     <List
-      loading={loading}
       itemLayout="horizontal"
       loadMore={loadMore}
       dataSource={flights}

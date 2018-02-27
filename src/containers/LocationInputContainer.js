@@ -26,7 +26,7 @@ class Input extends React.Component {
     };
 
     this.searchLocations = this.searchLocations.bind(this);
-    this.searchLocations = _.debounce(this.searchLocations, 1000);
+    this.searchLocations = _.debounce(this.searchLocations, 500);
   }
 
   searchLocations(search) {

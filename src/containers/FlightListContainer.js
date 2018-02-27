@@ -1,72 +1,28 @@
 import { graphql } from "react-apollo";
-import gql from "graphql-tag";
-import { Spin } from "antd";
+import { message } from "antd";
 
+import query from "./FlightListContainerQuery";
+import CenteredSpin from "../components/CenteredSpin";
 import FlightList from "../components/FlightList";
 
-// before: $before
-
-const query = gql`
-  query($from: String!, $to: String!, $date: Date!, $first: Int) {
-    allFlights(
-      search: {
-        from: [{ location: $from }]
-        to: [{ location: $to }]
-        date: { exact: $date }
-      }
-      options: { currency: EUR, locale: en_GB }
-      first: $first
-    ) {
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        node {
-          id
-          price {
-            amount
-            currency
-          }
-          airlines {
-            logoUrl
-            name
-          }
-          duration
-          departure {
-            localTime
-            airport {
-              locationId
-              city {
-                name
-              }
-            }
-          }
-          arrival {
-            localTime
-            airport {
-              locationId
-              city {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
 const QueryHandler = ({ loading, error, allFlights, onLoadMore }) => {
+  if (loading) {
+    return <CenteredSpin size="large" />;
+  }
+
   if (error) {
     console.error(error);
-    return "error";
+    return message.error("Wild error appeared, please retry it later");
   }
+  const flights = allFlights.edges.map(edge => {
+    return edge.node;
+  });
 
   return (
     <FlightList
-      allFlights={allFlights}
-      loading={loading}
+      flights={flights}
       onLoadMore={onLoadMore}
+      hasNextPage={allFlights.pageInfo.hasNextPage}
     />
   );
 };
