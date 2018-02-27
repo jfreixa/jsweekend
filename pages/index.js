@@ -1,7 +1,7 @@
 import { Fragment, Component } from "react";
-import Head from "next/head";
 import { DatePicker } from "antd";
 import moment from "moment";
+import styled from "styled-components";
 
 import withData from "../src/withData";
 import FlightListContainer from "../src/containers/FlightListContainer";
@@ -11,12 +11,18 @@ const { MonthPicker, RangePicker } = DatePicker;
 
 const dateFormat = "YYYY-MM-DD";
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+`;
+
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      from: "Madrid",
-      to: "Barcelona",
+      from: "",
+      to: "",
       date: moment()
         .add(1, "day")
         .format(dateFormat)
@@ -42,21 +48,7 @@ class Index extends Component {
   render() {
     return (
       <Fragment>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta charSet="utf-8" />
-          <link
-            rel="stylesheet"
-            href="https://unpkg.com/antd@3/dist/antd.min.css"
-          />
-        </Head>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            margin: "10px 0"
-          }}
-        >
+        <Wrapper>
           <LocationInputContainer
             handleChange={this.handleFrom}
             name={"From"}
@@ -69,7 +61,7 @@ class Index extends Component {
             format={dateFormat}
             disabledDate={currentDate => currentDate.isBefore(moment())}
           />
-        </div>
+        </Wrapper>
         {!this.empty() && (
           <FlightListContainer
             from={this.state.from}
@@ -81,9 +73,5 @@ class Index extends Component {
     );
   }
 }
-
-/**
-
- */
 
 export default withData(Index);

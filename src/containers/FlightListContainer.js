@@ -66,7 +66,6 @@ const QueryHandler = ({ loading, error, allFlights, onLoadMore }) => {
     <FlightList
       allFlights={allFlights}
       loading={loading}
-      showLoadingMore={allFlights.pageInfo.hasNextPage}
       onLoadMore={onLoadMore}
     />
   );

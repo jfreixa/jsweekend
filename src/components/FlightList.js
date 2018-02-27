@@ -1,28 +1,39 @@
 import { Fragment } from "react";
 import { List, Avatar, Spin, Button } from "antd";
+import styled from "styled-components";
 import TimeFormatter from "./TimeFormatter";
 import TravelTime from "./TravelTime";
 
-const loadingMore = false;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  alignitems: center;
+  flex-grow: 1;
+`;
 
-const FlightList = ({ allFlights, loading, showLoadingMore, onLoadMore }) => {
-  const flights = allFlights.edges.map(edge => {
-    return edge.node;
-  });
+const Centered = styled.div`
+  text-align: center;
+  margin-top: 12px;
+  height: 32;
+  lineheight: 32px;
+  margin-bottom: 12px;
+`;
 
-  const loadMore = showLoadingMore ? (
-    <div
-      style={{
-        textAlign: "center",
-        marginTop: 12,
-        height: 32,
-        lineHeight: "32px"
-      }}
-    >
-      {loadingMore && <Spin />}
-      {!loadingMore && <Button onClick={onLoadMore}>loading more</Button>}
-    </div>
-  ) : null;
+const FlightList = ({ allFlights, loading, onLoadMore }) => {
+  let loadMore = null;
+  let flights = [];
+  if (!loading) {
+    flights = allFlights.edges.map(edge => {
+      return edge.node;
+    });
+
+    loadMore = allFlights.pageInfo.hasNextPage ? (
+      <Centered>
+        <Button onClick={onLoadMore}>loading more</Button>
+      </Centered>
+    ) : null;
+  }
+
   return (
     <List
       loading={loading}
@@ -31,14 +42,7 @@ const FlightList = ({ allFlights, loading, showLoadingMore, onLoadMore }) => {
       dataSource={flights}
       renderItem={flight => (
         <List.Item>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
-              flexGrow: 1
-            }}
-          >
+          <Wrapper>
             <h3>
               {flight.price.amount} {flight.price.currency}
             </h3>
@@ -56,11 +60,11 @@ const FlightList = ({ allFlights, loading, showLoadingMore, onLoadMore }) => {
             <div>
               {flight.departure.airport.city.name} ({
                 flight.departure.airport.locationId
-              }) -->{flight.arrival.airport.city.name} ({
+              }) --> {flight.arrival.airport.city.name} ({
                 flight.arrival.airport.locationId
               })
             </div>
-          </div>
+          </Wrapper>
         </List.Item>
       )}
     />
