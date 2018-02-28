@@ -22,7 +22,7 @@ const Centered = styled.div`
 const FlightList = ({ flights, onLoadMore, hasNextPage }) => {
   const loadMore = hasNextPage ? (
     <Centered>
-      <Button onClick={onLoadMore}>loading more</Button>
+      <Button onClick={onLoadMore}>See more flights</Button>
     </Centered>
   ) : null;
 
