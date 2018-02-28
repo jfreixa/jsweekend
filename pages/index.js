@@ -18,6 +18,25 @@ const Wrapper = styled.div`
   margin: 10px 0;
 `;
 
+const StyledContent = styled(Content)`
+  margin: 24px 16px 0;
+  overflow: auto;
+`;
+
+const InsideContent = styled.div`
+  padding: 24px;
+  background: #fff;
+  text-align: center;
+`;
+
+const CenteredFooter = styled(Footer)`
+  text-align: center;
+`;
+
+const FullLayout = styled(Layout)`
+  height: 100vh;
+`;
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -48,7 +67,7 @@ class Index extends Component {
 
   render() {
     return (
-      <Layout style={{ height: "100vh" }}>
+      <FullLayout>
         <Header>
           <Wrapper>
             <LocationInputContainer
@@ -66,10 +85,8 @@ class Index extends Component {
           </Wrapper>
         </Header>
         <Layout>
-          <Content style={{ margin: "24px 16px 0", overflow: "auto" }}>
-            <div
-              style={{ padding: 24, background: "#fff", textAlign: "center" }}
-            >
+          <StyledContent>
+            <InsideContent>
               {!this.empty() ? (
                 <FlightListContainer
                   from={this.state.from}
@@ -79,11 +96,11 @@ class Index extends Component {
               ) : (
                 "There is nothing here! Fill the inputs above to search for flights."
               )}
-            </div>
-          </Content>
+            </InsideContent>
+          </StyledContent>
         </Layout>
-        <Footer style={{ textAlign: "center" }}>Jordi Freixa Serrabassa</Footer>
-      </Layout>
+        <CenteredFooter>Jordi Freixa Serrabassa</CenteredFooter>
+      </FullLayout>
     );
   }
 }
