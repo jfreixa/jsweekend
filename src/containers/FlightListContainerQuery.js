@@ -1,13 +1,9 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 const query = gql`
   query($from: String!, $to: String!, $date: Date!, $first: Int) {
     allFlights(
-      search: {
-        from: [{ location: $from }]
-        to: [{ location: $to }]
-        date: { exact: $date }
-      }
+      search: { from: [{ location: $from }], to: [{ location: $to }], date: { exact: $date } }
       options: { currency: EUR, locale: en_GB }
       first: $first
     ) {

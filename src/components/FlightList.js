@@ -1,8 +1,9 @@
-import { Fragment } from "react";
-import { List, Avatar, Spin, Button, Divider } from "antd";
-import styled from "styled-components";
-import TimeFormatter from "./TimeFormatter";
-import TravelTime from "./TravelTime";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { List, Avatar, Spin, Button, Divider } from 'antd';
+import styled from 'styled-components';
+import TimeFormatter from './TimeFormatter';
+import TravelTime from './TravelTime';
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,16 +52,22 @@ const FlightList = ({ flights, onLoadMore, hasNextPage }) => {
               <TravelTime minutes={flight.duration} />
             </div>
             <div>
-              {flight.departure.airport.city.name} ({
-                flight.departure.airport.locationId
-              }) <Divider type="vertical" /> {flight.arrival.airport.city.name}{" "}
-              ({flight.arrival.airport.locationId})
+              {flight.departure.airport.city.name} ({flight.departure.airport.locationId}){' '}
+              <Divider type="vertical" /> {flight.arrival.airport.city.name} ({
+                flight.arrival.airport.locationId
+              })
             </div>
           </Wrapper>
         </List.Item>
       )}
     />
   );
+};
+
+FlightList.propTypes = {
+  flights: PropTypes.array.isRequired,
+  onLoadMore: PropTypes.func.isRequired,
+  hasNextPage: PropTypes.bool.isRequired,
 };
 
 export default FlightList;

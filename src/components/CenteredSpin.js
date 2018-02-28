@@ -1,5 +1,5 @@
-import { Spin } from "antd";
-import styled from "styled-components";
+import { Spin } from 'antd';
+import styled from 'styled-components';
 
 const CenteredSpin = styled(Spin)`
   display: block;

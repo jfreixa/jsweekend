@@ -1,28 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { ApolloProvider, getDataFromTree } from "react-apollo";
-import Head from "next/head";
-import initApollo from "./apollo/initApollo";
+import React from 'react';
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import Head from 'next/head';
+import initApollo from './apollo/initApollo';
 
 function getComponentDisplayName(Component) {
-  return Component.displayName || Component.name || "Unknown";
+  return Component.displayName || Component.name || 'Unknown';
 }
 
-export default ComposedComponent => {
-  return class WithData extends React.Component {
-    static displayName = `WithData(${getComponentDisplayName(
-      ComposedComponent
-    )})`;
-    static propTypes = {
-      serverState: PropTypes.object.isRequired
-    };
+export default ComposedComponent =>
+  class WithData extends React.Component {
+    static displayName = `WithData(${getComponentDisplayName(ComposedComponent)})`;
 
     static async getInitialProps(ctx) {
       // Initial serverState with apollo (empty)
       let serverState = {
         apollo: {
-          data: {}
-        }
+          data: {},
+        },
       };
 
       let composedInitialProps = {};
@@ -40,11 +34,13 @@ export default ComposedComponent => {
             router: {
               asPath: ctx.asPath,
               pathname: ctx.pathname,
-              query: ctx.query
-            }
-          }
+              query: ctx.query,
+            },
+          },
         );
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
 
       if (!process.browser) {
         Head.rewind();
@@ -52,13 +48,13 @@ export default ComposedComponent => {
 
       serverState = {
         apollo: {
-          data: apollo.cache.extract()
-        }
+          data: apollo.cache.extract(),
+        },
       };
 
       return {
         serverState,
-        ...composedInitialProps
+        ...composedInitialProps,
       };
     }
 
@@ -75,4 +71,3 @@ export default ComposedComponent => {
       );
     }
   };
-};
